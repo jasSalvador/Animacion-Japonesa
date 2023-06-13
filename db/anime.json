@@ -1,0 +1,65 @@
+[
+    {
+        "nombre": "Akira",
+        "genero": "Seinen",
+        "año": "1988",
+        "autor": "Katsuhiro Otomo",
+        "id": "0"
+    },
+    {
+        "nombre": "Dragon Ball",
+        "genero": "Shonen",
+        "año": "1986",
+        "autor": "Akira Toriyama",
+        "id": "1"
+    },
+    {
+        "nombre": "Sailor Moon",
+        "genero": "Shojo",
+        "año": "1992",
+        "autor": "Naoko Takeuchi",
+        "id": "2"
+    },
+    {
+        "nombre": "Naruto",
+        "genero": "Shonen",
+        "año": "2002",
+        "autor": "Masashi Kishimoto",
+        "id": "3"
+    },
+    {
+        "nombre": "Neon Genesis Evangelion",
+        "genero": "Mecha",
+        "año": "1995",
+        "autor": "Yoshiyuki Sadamoto",
+        "id": "4"
+    },
+    {
+        "id": "119440",
+        "nombre": "Noragami",
+        "genero": "Shonen",
+        "año": "2011",
+        "autor": "Adachitoka"
+    },
+    {
+        "id": "94131e",
+        "nombre": "Tokio revenger",
+        "genero": "Shonen",
+        "año": "2017",
+        "autor": "Ken Wakui"
+    },
+    {
+        "id": "cdc571",
+        "nombre": "The Promised Neverland",
+        "genero": "Shonen",
+        "año": "2016",
+        "autor": "Kaiu Shirae"
+    },
+    {
+        "id": "518a07",
+        "nombre": "Death Note",
+        "genero": "Seinen",
+        "año": "2006",
+        "autor": "Tsugumi Ōba"
+    }
+]

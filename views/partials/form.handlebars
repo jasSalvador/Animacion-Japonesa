@@ -1,0 +1,112 @@
+<!--formulario agregar animes-->
+<section id="form" class="form d-none text-light pb-5">
+    <div class="w-75 mx-auto">
+        <div class="text-center mx-auto">
+            <h2>Formulario de Anime.</h2>
+            <p class="pb-4">*Ingresa todos los datos solicitados.</p>
+        </div>
+
+        <form id="formCreateAnime" class="w-50 text-start mx-auto pb-4">
+            <label for="createNombre" class="form-label px-3">Nombre</label>
+            <input value="" type="text" name="createNombre" id="createNombre" class="form-control" required>
+            <label for="createGenero" class="form-label px-3">Genereo</label>
+            <input value="" type="text" name="createGenero" id="createGenero" class="form-control" required>
+            <label for="createAño" class="form-label px-3">Año</label>
+            <input value="" type="text" name="createAño" id="createAño" class="form-control" required>
+            <label for="createAutor" class="form-label px-3">Autor</label>
+            <input value="" type="text" name="createAutor" id="createAutor" class="form-control" required>
+            <input type="submit" value="Agregar anime" class="btn my-2 d-block" id="agregarBtn">            
+            <input type="submit" value="Actualizar" class="btn my-2 d-block" id="actualizarBtn">
+        </form>
+    </div>
+</section>
+
+<script>
+    //agregar anime |  evento submit del form y modificar
+    let formCreateAnime = document.getElementById('formCreateAnime');
+    formCreateAnime.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        
+        let selector = event.submitter.id;
+        if (selector == "agregarBtn") {
+
+            console.log('Capturando Formulario');
+            try {
+                const raw = JSON.stringify({
+                    "nombre": createNombre.value,
+                    "genero": createGenero.value,
+                    "año": createAño.value,
+                    "autor": createAutor.value
+                });
+
+                const myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                let response = await fetch("/animes", {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                });
+
+                let data = await response.json();
+                if (data.code == 201) {
+                    alert("Anime creado con éxito.")
+                    formCreateAnime.reset();
+                    location.reload();
+                } else {
+                    throw new Error("Error al guardar los datos en la BD.");
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+
+        } else if (selector == 'actualizarBtn') {
+            console.log('Actualizando Anime');
+            try {
+                const raw = JSON.stringify({
+                    "id": id,
+                    "nombre": createNombre.value,
+                    "genero": createGenero.value,
+                    "año": createAño.value,
+                    "autor": createAutor.value
+                });
+
+                const myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
+
+                let response = await fetch("/animes", {
+                    method: "PUT",
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                });
+
+                let data = await response.json();
+                if (data.code == 200) {
+                    alert("Anime actualizado con éxito.");
+                    formCreateAnime.reset();
+                    location.reload();
+                } else {
+                    throw new Error("Error al actualizar los datos en la BD.");
+                }
+
+            } catch (error) {
+                alert(error.message)
+            }
+        }
+    });
+</script>
+
+<style>
+    #agregarBtn, #actualizarBtn{
+        background-color: rgb(226, 55, 140);
+        color: white;
+        text-align: center;
+        margin: 20px auto;
+    }
+    #agregarBtn:hover, #actualizarBtn:hover{
+        background-color: rgb(228, 145, 186);
+        color: black;
+    }
+</style>

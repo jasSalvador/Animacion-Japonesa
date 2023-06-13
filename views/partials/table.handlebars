@@ -1,0 +1,174 @@
+<!--tabla anime-->
+<div class="container py-5 text-center mx-auto">
+    <h2 class="text-center text-light mx-auto my-5">Listado de todos los animes</h2>
+
+    <!--tabla-->
+    <section class="d-flex justify-content-center">
+        <div id="scrollme">
+            <table class="table table-light table-striped my-5">
+                <thead class="text-center">
+                    <tr class="text-center mx-auto">
+                        <th scope="col">Index</th>
+                        <th class="col" scope="col">Nombre</th>
+                        <th scope="col">Genero</th>
+                        <th scope="col">año</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Detalles</th>
+                        <th scope="col">Actualizar</th>
+                        <th scope="col">Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each data}}
+                    <tr class="text-center ">
+                        <th scope="row">{{this.id}}</th>
+                        <td>{{this.nombre}}</td>
+                        <td>{{this.genero}}</td>
+                        <td>{{this.año}}</td>
+                        <td>{{this.autor}}</td>
+                        <td><a class="btn detailBtn" href="/animes/{{this.id}}">Detalles</a></td>
+                        <td><a class="btn updateBtn" href="#form">Actualizar</a></td>
+                        <td><button class="btn deleteBtn">Eliminar</button></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!--boton agregar anime-->
+    <div class="text-center my-5">
+        <a href="#form"> <button type="submit" id="formShow" class="btn p-2">Agregar un nuevo anime</button></a>
+    </div>
+</div>
+
+<script>
+    //para seleccionar botones
+    const updateBtn = document.querySelectorAll(".updateBtn");
+    const deleteBtn = document.querySelectorAll(".deleteBtn");
+    const detailBtn = document.querySelectorAll(".detailBtn");
+
+    //para guardar el id capturado en los botones
+    let id;
+
+    //muestra formulario y oculta botones
+    formShow.addEventListener('click', () => {
+        form.classList.replace("d-none", "d-block");
+        formShow.classList.replace("d-block", "d-none");
+        actualizarBtn.classList.replace("d-block", "d-none");
+        agregarBtn.classList.replace("d-none", "d-block");
+        formCreateAnime.reset();
+    });
+
+    //capturar botones actualizar y su data 
+    for (let i = 0; i < updateBtn.length; i++) {
+        updateBtn[i].addEventListener("click", (event) => {
+
+            form.classList.replace("d-none", "d-block");
+            agregarBtn.classList.replace("d-block", "d-none");
+            actualizarBtn.classList.replace("d-none", "d-block");
+            formShow.classList.replace("d-none", "d-block");
+
+            let path = event.srcElement.offsetParent.nextSibling.parentElement.cells;
+
+            id = path[0].innerText;
+            createNombre.value = path[1].innerText;
+            createGenero.value = path[2].innerText;
+            createAño.value = path[3].innerText;
+            createAutor.value = path[4].innerText;
+        });
+    };
+
+    //capturar todos los botones eliminar y eliminamos
+    for (let i = 0; i < deleteBtn.length; i++) {
+        deleteBtn[i].addEventListener("click", (event) => {
+
+            let path = event.srcElement.offsetParent.nextSibling.parentElement.cells;
+            let id = path[0].innerText;
+
+            let requestOptions = {
+                method: 'DELETE',
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/animes/" + id, requestOptions)
+                //fetch(`http://localhost:3000/animes/${id}`, requestOptions)
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.json()
+                    } else {
+                        throw new Error("Error al eliminar")
+                    }
+                })
+                .then(result => {
+                    console.log(result)
+                    alert(result.message)
+                    location.reload();
+                })
+                .catch(error => console.log(error.message));
+        })
+    };
+
+
+    // capturamos todos los botones para ver Detalles
+    for (let i = 0; i < detailBtn.length; i++) {
+        detailBtn[i].addEventListener("click", (event) => {
+            console.log('hola detalle');
+
+            let path = event.srcElement.offsetParent.nextSibling.parentElement.cells
+            let id = path[0].innerText;
+
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+
+            fetch(`http://localhost:3000/anime/${id}`, requestOptions)
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        });
+    };
+</script>
+
+<style>
+    .table {
+        box-shadow: 7px 7px 5px 0px rgb(172, 171, 171);
+        -webkit-box-shadow: 7px 7px 5px 0px rgb(167, 166, 166);
+        -moz-box-shadow: 7px 7px 5px 0px rgb(155, 154, 154);
+    }
+    .detailBtn {
+        background-color: #BFFFBF;
+    }
+    .updateBtn {
+        /*background-color: rgb(214, 155, 214);*/
+        background-color: #B3D9FF;
+    }
+    .deleteBtn {
+        /*background-color: rgb(226, 131, 163);*/
+        background-color: #FFB3BB;
+    }
+    #formShow {
+        background-color: rgb(226, 55, 140);
+        color: white;
+    }
+    #formShow:hover {
+        background-color: rgb(228, 145, 186);
+        color: black;
+    }
+
+    @media(max-width: 768px) {
+        #scrollme {
+            overflow-x: scroll;
+            width: 500px;
+        }
+    }
+
+    @media(max-width: 630px) {
+        #scrollme {
+            overflow-x: scroll;
+            width: 350px;
+        }
+    }
+</style>

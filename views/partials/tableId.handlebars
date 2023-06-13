@@ -1,0 +1,41 @@
+<section class="container">
+    <h2 class="text-light text-center mx-auto">El anime seleccionado es:</h2>
+    <table class="table table-info table-striped my-5">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Genero</th>
+                <th scope="col">año</th>
+                <th scope="col">Autor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {{#each data}}
+                <th scope="row">{{this.id}}</th>
+                <td>{{this.nombre}}</td>
+                <td>{{this.genero}}</td>
+                <td>{{this.año}}</td>
+                <td>{{this.autor}}</td>
+                {{/each}}
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center py-5">
+        <a class="btn pt-2" href="/animes">Volver</a>
+    </div>
+</section>
+
+<style>
+    .btn {
+        background-color: rgb(226, 55, 140);
+        color: white;
+    }
+
+    .btn:hover {
+        background-color: rgb(228, 145, 186);
+        color: black;
+    }
+</style>

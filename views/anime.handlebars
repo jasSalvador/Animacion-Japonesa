@@ -1,0 +1,11 @@
+<section>
+    <h1>El anime que buscaste es:</h1>
+
+    {{#if target}} <!--target es una variable (viene de index.js(mostrar x id)-->
+        {{>tableId
+            data = target
+        }}
+    {{else}} 
+        <h2>No existe el Id</h2>
+    {{/if}}
+</section>
